@@ -1,5 +1,6 @@
 add_subdirectory(BrainF)
 add_subdirectory(Fibonacci)
+add_subdirectory(GenerateBlocks)
 add_subdirectory(HowToUseJIT)
 add_subdirectory(HowToUseLLJIT)
 add_subdirectory(IRTransforms)

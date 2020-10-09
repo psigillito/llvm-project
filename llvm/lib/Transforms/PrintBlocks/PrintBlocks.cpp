@@ -73,8 +73,8 @@ namespace {
                         errs() << "\n" << triple_indent << "--Basic Block --\n";
 
                         errs() << triple_indent << "Label: ";
-                        b->printAsOperand(errs(), false);
-                        errs() << "\n";
+                        errs() << "\n";                        b->printAsOperand(errs(), false);
+
 
                         for ( auto instr = b->begin(); instr != b->end(); ++instr)
                         {

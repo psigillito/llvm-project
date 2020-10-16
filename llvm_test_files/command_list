@@ -1,0 +1,5 @@
+llvm-dis [filename] //convert bitcode into human readable IR
+
+opt -load file_name.so -Command < target_bit_code.bc > new_file.bc
+
+

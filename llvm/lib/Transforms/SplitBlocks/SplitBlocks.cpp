@@ -10,6 +10,9 @@
 #include "llvm/IR/ValueSymbolTable.h"
 #include "llvm/Analysis/CFGPrinter.h"
 #include <stdlib.h>
+#include "llvm/IR/LegacyPassManager.h"
+#include "llvm/Transforms/IPO/PassManagerBuilder.h"
+
 
 using namespace llvm;
 using namespace std;
@@ -24,29 +27,27 @@ namespace {
         static char ID;
         SplitBlocks() : ModulePass(ID) {}
 
-        bool runOnModule(Module &M) override
-        {
-            for (auto &func : M.getFunctionList())
-            {
+        bool runOnModule(Module &M) override {
+
+            srand (time(NULL));
+
+            for (auto &func : M.getFunctionList()) {
                 //if we have a block to split
                 if( func.getBasicBlockList().size() )
                 {
-                    errs() << double_indent << "Function Name: " << func.getName() << "\n";
-                    errs() << triple_indent << "Number of Blocks: " << func.getBasicBlockList().size() << "\n";
-
                     //get list of blocks in function
                     auto& block_list = func.getBasicBlockList();
 
                     //if the function is not empty (does happen)
                     if( !block_list.empty())
                     {
-                        for( auto iter = block_list.begin(); iter != block_list.end(); ++iter)
+                        auto iter = block_list.begin();
+                        for(iter = block_list.begin(); iter != block_list.end(); ++iter)
                         {
-                            //only split at instructions that are not the first or last instruction
                             if(iter->size() > 2)
                             {
                                     llvm::BasicBlock::iterator instr_iter = iter->begin();
-                                    ++instr_iter;
+                                    instr_iter++;
                                     iter->splitBasicBlock(instr_iter);
                             }
                         }
@@ -54,13 +55,9 @@ namespace {
                 }
             }
 
-            for (auto &func : M.getFunctionList())
-            {
-                if( func.getBasicBlockList().size() )
-                {
-                    errs() << double_indent << "Edited Function Name: " << func.getName() << "\n";
-                    errs() << triple_indent << "New Number of Blocks: " << func.getBasicBlockList().size() << "\n";
-                }
+            for (auto &func : M.getFunctionList()) {
+                errs() << double_indent << " Function Name: " << func.getName() << "\n";
+                errs() << triple_indent << "Number of Blocks: " << func.getBasicBlockList().size() << "\n";
             }
                 return false;
         }
@@ -69,3 +66,8 @@ namespace {
 char SplitBlocks::ID = 0;
 
 static RegisterPass<SplitBlocks> X("SplitBlocks", "SplitBlocks Pass");
+
+static RegisterStandardPasses Y(
+    PassManagerBuilder::EP_EarlyAsPossible,
+    [](const PassManagerBuilder &Builder,
+       legacy::PassManagerBase &PM) { PM.add(new SplitBlocks()); });

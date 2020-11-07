@@ -7,6 +7,10 @@
 #include <string>
 #include "llvm/IR/Instruction.h"
 #include "llvm/IR/ValueSymbolTable.h"
+#include "llvm/IR/LegacyPassManager.h"
+#include "llvm/Transforms/IPO/PassManagerBuilder.h"
+#include <iostream>
+#include <fstream>
 
 using namespace llvm;
 using namespace std;
@@ -26,6 +30,11 @@ namespace {
             errs() << "----------Module Info----------\n";
             errs() << "Source File: " << M.getSourceFileName() << "\n";
             errs() << "Module Name: " << M.getName() << "\n\n";
+
+	    ofstream myfile;
+  	    myfile.open ("example.txt");
+            myfile << "Writing this to a file.\n";
+            myfile.close();
 
             //print global vars
             errs() << "GLOBAL VARIABLES\n";
@@ -90,3 +99,8 @@ namespace {
 char PrintBlocks::ID = 0;
 
 static RegisterPass<PrintBlocks> X("PrintBlocks", "Print Blocks Pass");
+static void registerPass(const PassManagerBuilder &, legacy::PassManagerBase &PM){ PM.add(new PrintBlocks()); };
+static RegisterStandardPasses Y(
+    PassManagerBuilder::EP_ModuleOptimizerEarly,
+    [](const PassManagerBuilder &Builder,
+       legacy::PassManagerBase &PM) { PM.add(new PrintBlocks()); });

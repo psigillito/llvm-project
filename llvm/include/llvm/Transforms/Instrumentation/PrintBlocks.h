@@ -14,15 +14,35 @@
 #include <vector>
 
 
+
 namespace llvm {
 
+    class ModulePass;
+    class raw_ostream;
 
-    class PrintBlocks : public ModulePass {
+    ModulePass *createPrintBlocksPass();
+}
+
+#endif // LLVM_TOOLS_OPT_BREAKPOINTPRINTER_H
+
+
+
+
+
+/*namespace llvm {
+
+
+    struct PrintBlocks : public ModulePass {
         static char ID;
 
 
     public:
-        PrintBlocks() : ModulePass(ID) {};
+        PrintBlocks(); : ModulePass(ID);
+        //~PrintBlocks() = default;
+
+        void getAnalysisUsage(AnalysisUsage &AU) const override {
+            AU.setPreservesAll();
+        }
 
         bool runOnModule(Module &M) override;
 
@@ -31,6 +51,6 @@ namespace llvm {
         }
 
     };
-}
+}*/
 
-#endif
+//#endif

@@ -81,6 +81,8 @@
 #include "llvm/Transforms/Utils/NameAnonGlobals.h"
 #include "llvm/Transforms/Utils/SymbolRewriter.h"
 #include "llvm/Transforms/Utils/UniqueInternalLinkageNames.h"
+#include "llvm/Transforms/Instrumentation/PrintBlocks.h"
+
 #include <memory>
 using namespace clang;
 using namespace llvm;
@@ -355,6 +357,17 @@ static void addDataFlowSanitizerPass(const PassManagerBuilder &Builder,
   PM.add(
       createDataFlowSanitizerLegacyPassPass(LangOpts.SanitizerBlacklistFiles));
 }
+
+static void addPrintBlocksPass(const PassManagerBuilder &Builder,
+                                     legacy::PassManagerBase &PM) {
+  const PassManagerBuilderWrapper &BuilderWrapper =
+          static_cast<const PassManagerBuilderWrapper&>(Builder);
+  const LangOptions &LangOpts = BuilderWrapper.getLangOpts();
+  PM.add(PrintBlocks::createPrintBlocksPass());
+}
+
+
+
 
 static TargetLibraryInfoImpl *createTLII(llvm::Triple &TargetTriple,
                                          const CodeGenOptions &CodeGenOpts) {
@@ -731,6 +744,8 @@ void EmitAssemblyHelper::CreatePasses(legacy::PassManager &MPM,
     PMBuilder.addExtension(PassManagerBuilder::EP_EnabledOnOptLevel0,
                            addDataFlowSanitizerPass);
   }
+
+  PMBuilder.addExtension(PassManagerBuilder::EP_OptimizerLast, addPrintBlocksPass );
 
   // Set up the per-function pass manager.
   FPM.add(new TargetLibraryInfoWrapperPass(*TLII));

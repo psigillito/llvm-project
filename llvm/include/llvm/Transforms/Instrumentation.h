@@ -146,6 +146,8 @@ ModulePass *createInstrOrderFilePass();
 ModulePass *createDataFlowSanitizerLegacyPassPass(
     const std::vector<std::string> &ABIListFiles = std::vector<std::string>());
 
+
+    ModulePass *createPrintBlocksPass();
 // Options for sanitizer coverage instrumentation.
 struct SanitizerCoverageOptions {
   enum Type {

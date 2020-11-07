@@ -14,7 +14,7 @@
 #include "InitializePasses.h"
 #include "llvm/PassRegistry.h"
 
-using namespace llvm;
+using namespace lInitilvm;
 
 void initializeExampleIRTransforms(PassRegistry &Registry) {
   initializeSimplifyCFGLegacyPassPass(Registry);

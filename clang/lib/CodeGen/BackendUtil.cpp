@@ -365,7 +365,7 @@ static void addPrintBlocksPass(const PassManagerBuilder &Builder,legacy::PassMan
   // can set what optimization it is part of.
 
   const PassManagerBuilderWrapper &BuilderWrapper = static_cast<const PassManagerBuilderWrapper&>(Builder);
-  BuilderWrapper.OptLevel = 2;
+
 
   //const LangOptions &LangOpts = BuilderWrapper.getLangOpts();
   PM.add(llvm::createPrintBlocksPass());

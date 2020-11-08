@@ -21,6 +21,8 @@
 #include <string>
 #include "llvm/IR/Instruction.h"
 #include "llvm/IR/ValueSymbolTable.h"
+#include "llvm/Support/CommandLine.h"
+
 
 
 namespace llvm {
@@ -32,10 +34,13 @@ namespace llvm {
 using namespace llvm;
 using namespace std;
 
+//create a cmd line arg. 2nd and 3rd args used with --help. string template arg sets InputFileName to hold a string.
+static cl::opt<string> InputFilename("testy", cl::desc("Test cmd line arg"), cl::value_desc("filename"));
+
+
 const char* indent = "    ";
 const char* double_indent = "        ";
 const char* triple_indent = "            ";
-//anonymous namespace to limit to this file
 
     struct PrintBlocks : public ModulePass
     {

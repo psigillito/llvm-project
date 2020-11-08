@@ -28,11 +28,6 @@ namespace llvm {
     class ModulePass;
     class raw_ostream;
 
-    //ModulePass *createPrintBlocksPass() {
-    //    return new PrintBlocks();
-    //};
-//}
-
 
 using namespace llvm;
 using namespace std;
@@ -41,7 +36,6 @@ const char* indent = "    ";
 const char* double_indent = "        ";
 const char* triple_indent = "            ";
 //anonymous namespace to limit to this file
-//namespace {
 
     struct PrintBlocks : public ModulePass
     {
@@ -112,74 +106,13 @@ const char* triple_indent = "            ";
             return false;
         }
     };
-//}
+
 char PrintBlocks::ID = 0;
 
-
-
-//namespace llvm {
-
-    //class ModulePass;
-    //class raw_ostream;
 
     ModulePass *createPrintBlocksPass() {
         return new PrintBlocks();
     };
 }
-
-
-
-
-//ModulePass *createPrintBlocksPass() {
-//    return new PrintBlocks();
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*namespace llvm {
-
-
-    struct PrintBlocks : public ModulePass {
-        static char ID;
-
-
-    public:
-        PrintBlocks(); : ModulePass(ID);
-        //~PrintBlocks() = default;
-
-        void getAnalysisUsage(AnalysisUsage &AU) const override {
-            AU.setPreservesAll();
-        }
-
-        bool runOnModule(Module &M) override;
-
-        static ModulePass *createPrintBlocksPass() {
-            return new PrintBlocks();
-        }
-
-    };
-}*/
 
 #endif

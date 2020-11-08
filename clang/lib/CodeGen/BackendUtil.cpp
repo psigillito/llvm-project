@@ -358,11 +358,16 @@ static void addDataFlowSanitizerPass(const PassManagerBuilder &Builder,
       createDataFlowSanitizerLegacyPassPass(LangOpts.SanitizerBlacklistFiles));
 }
 
-static void addPrintBlocksPass(const PassManagerBuilder &Builder,
-                                     legacy::PassManagerBase &PM) {
-  const PassManagerBuilderWrapper &BuilderWrapper =
-          static_cast<const PassManagerBuilderWrapper&>(Builder);
-  const LangOptions &LangOpts = BuilderWrapper.getLangOpts();
+//takes a builder and a pass manager
+static void addPrintBlocksPass(const PassManagerBuilder &Builder,legacy::PassManagerBase &PM)
+{
+  // declare a buildWrapper, sets up the optimization sequence.
+  // can set what optimization it is part of.
+
+  const PassManagerBuilderWrapper &BuilderWrapper = static_cast<const PassManagerBuilderWrapper&>(Builder);
+  BuilderWrapper.OptLevel = 2;
+
+  //const LangOptions &LangOpts = BuilderWrapper.getLangOpts();
   PM.add(llvm::createPrintBlocksPass());
 }
 

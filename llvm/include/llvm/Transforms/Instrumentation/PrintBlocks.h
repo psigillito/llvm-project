@@ -21,7 +21,7 @@
 #include <string>
 #include "llvm/IR/Instruction.h"
 #include "llvm/IR/ValueSymbolTable.h"
-#include "llvm/Support/CommandLine.h"
+
 
 
 
@@ -34,12 +34,10 @@ namespace llvm {
 using namespace llvm;
 using namespace std;
 
-
 const char* indent = "    ";
 const char* double_indent = "        ";
 const char* triple_indent = "            ";
-
-static cl::opt<bool> PBlock("PBlock", cl::NotHidden, cl::desc("PBlock"));
+//anonymous namespace to limit to this file
 
     struct PrintBlocks : public ModulePass
     {
@@ -47,8 +45,6 @@ static cl::opt<bool> PBlock("PBlock", cl::NotHidden, cl::desc("PBlock"));
         PrintBlocks() : ModulePass(ID) {};
 
         bool runOnModule(Module &M) override {
-
-
             errs() << "----------Module Info----------\n";
             errs() << "Source File: " << M.getSourceFileName() << "\n";
             errs() << "Module Name: " << M.getName() << "\n\n";

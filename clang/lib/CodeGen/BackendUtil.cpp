@@ -91,9 +91,6 @@ using namespace llvm;
   llvm::PassPluginLibraryInfo get##Ext##PluginInfo();
 #include "llvm/Support/Extension.def"
 
-
-static cl::opt<bool> HBlock("HBlock", cl::NotHidden, cl::desc("HBlock"));
-
 namespace {
 
 // Default filename used for profile generation.
@@ -362,13 +359,10 @@ static void addDataFlowSanitizerPass(const PassManagerBuilder &Builder,
 }
 
 //takes a builder and a pass manager
-static void addPrintBlocksPass(const PassManagerBuilder &Builder,legacy::PassManagerBase &PM)
+static void  (const PassManagerBuilder &Builder,legacy::PassManagerBase &PM)
 {
-  // declare a buildWrapper, sets up the optimization sequence.
-  // can set what optimization it is part of.
-
+  //declare a build
   const PassManagerBuilderWrapper &BuilderWrapper = static_cast<const PassManagerBuilderWrapper&>(Builder);
-
 
   //const LangOptions &LangOpts = BuilderWrapper.getLangOpts();
   PM.add(llvm::createPrintBlocksPass());

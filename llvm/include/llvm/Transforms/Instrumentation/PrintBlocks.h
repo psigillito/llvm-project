@@ -39,6 +39,8 @@ const char* indent = "    ";
 const char* double_indent = "        ";
 const char* triple_indent = "            ";
 
+static cl::opt<bool> PBlock("PBlock", cl::NotHidden, cl::desc("PBlock"));
+
     struct PrintBlocks : public ModulePass
     {
         static char ID;

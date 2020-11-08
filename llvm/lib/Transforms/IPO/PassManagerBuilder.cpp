@@ -55,7 +55,6 @@ static cl::opt<bool>
     RunPartialInlining("enable-partial-inlining", cl::init(false), cl::Hidden,
                        cl::ZeroOrMore, cl::desc("Run Partial inlinining pass"));
 
-static cl::opt<string> PBlock("PBlock", cl::desc("Test cmd line arg"), cl::value_desc("PBlock"));
 
 static cl::opt<bool>
 UseGVNAfterVectorization("use-gvn-after-vectorization",

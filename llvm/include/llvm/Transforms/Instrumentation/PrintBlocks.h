@@ -34,9 +34,6 @@ namespace llvm {
 using namespace llvm;
 using namespace std;
 
-//create a cmd line arg. 2nd and 3rd args used with --help. string template arg sets InputFileName to hold a string.
-static cl::opt<string> InputFilename("testy", cl::desc("Test cmd line arg"), cl::value_desc("filename"));
-
 
 const char* indent = "    ";
 const char* double_indent = "        ";
@@ -48,6 +45,18 @@ const char* triple_indent = "            ";
         PrintBlocks() : ModulePass(ID) {};
 
         bool runOnModule(Module &M) override {
+
+
+            if( PBlock)
+            {
+                errs() << "PBLOCKS NOT PASSED\n";
+            }
+            else
+            {
+                errs() << "PBLOCKS PASSED!!!!!!\n";
+            }
+
+
             errs() << "----------Module Info----------\n";
             errs() << "Source File: " << M.getSourceFileName() << "\n";
             errs() << "Module Name: " << M.getName() << "\n\n";

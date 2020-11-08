@@ -359,7 +359,7 @@ static void addDataFlowSanitizerPass(const PassManagerBuilder &Builder,
 }
 
 //takes a builder and a pass manager
-static void  (const PassManagerBuilder &Builder,legacy::PassManagerBase &PM)
+static void addPrintBlocksPass(const PassManagerBuilder &Builder,legacy::PassManagerBase &PM)
 {
   //declare a build
   const PassManagerBuilderWrapper &BuilderWrapper = static_cast<const PassManagerBuilderWrapper&>(Builder);

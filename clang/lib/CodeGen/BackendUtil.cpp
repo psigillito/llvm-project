@@ -91,6 +91,9 @@ using namespace llvm;
   llvm::PassPluginLibraryInfo get##Ext##PluginInfo();
 #include "llvm/Support/Extension.def"
 
+
+static cl::opt<bool> HBlock("HBlock", cl::NotHidden, cl::desc("HBlock"));
+
 namespace {
 
 // Default filename used for profile generation.

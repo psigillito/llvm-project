@@ -49,16 +49,6 @@ static cl::opt<bool> PBlock("PBlock", cl::NotHidden, cl::desc("PBlock"));
         bool runOnModule(Module &M) override {
 
 
-            if( PBlock)
-            {
-                errs() << "PBLOCKS NOT PASSED\n";
-            }
-            else
-            {
-                errs() << "PBLOCKS PASSED!!!!!!\n";
-            }
-
-
             errs() << "----------Module Info----------\n";
             errs() << "Source File: " << M.getSourceFileName() << "\n";
             errs() << "Module Name: " << M.getName() << "\n\n";

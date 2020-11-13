@@ -102,6 +102,14 @@ static llvm::cl::list<string> Includes("I",
 			llvm::cl::desc("Header search path"),
 			llvm::cl::value_desc("path"), llvm::cl::Prefix);
 
+
+static llvm::cl::list<string> Includes("I",
+									   llvm::cl::desc("Header search path"),
+									   llvm::cl::value_desc("path"), llvm::cl::Prefix);
+
+
+
+
 static llvm::cl::opt<string> OutputLanguage(llvm::cl::Required,
 	llvm::cl::ValueRequired, "language",
 	llvm::cl::desc("Bindings to generate"),

@@ -78,6 +78,8 @@ cl::opt<bool> MV67("mv67", cl::Hidden, cl::desc("Build for Hexagon V67"),
                    cl::init(false));
 cl::opt<bool> MV67T("mv67t", cl::Hidden, cl::desc("Build for Hexagon V67T"),
                     cl::init(false));
+cl::opt<bool> test_pass("test_pass", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
+                        cl::init(false))
 
 cl::opt<Hexagon::ArchEnum>
     EnableHVX("mhvx",

@@ -55,6 +55,9 @@ static cl::opt<bool>
     RunPartialInlining("enable-partial-inlining", cl::init(false), cl::Hidden,
                        cl::ZeroOrMore, cl::desc("Run Partial inlinining pass"));
 
+static cl::opt<bool> test_pass2("test_pass2", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
+                        cl::init(false));
+
 static cl::opt<bool>
 UseGVNAfterVectorization("use-gvn-after-vectorization",
   cl::init(false), cl::Hidden,

@@ -20,7 +20,7 @@ const char* triple_indent = "            ";
 
 namespace {
 
-    cl::opt<bool> pbarg("pbarg", cl::desc("Don't print informational messages"), cl::NotHidden);
+    static cl::opt<bool> pbarg("pbarg", cl::desc("Don't print informational messages"), cl::NotHidden);
 
 
     struct PrintBlocks : public ModulePass

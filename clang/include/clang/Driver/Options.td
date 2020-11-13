@@ -3102,9 +3102,6 @@ def mnvs : Flag<["-"], "mnvs">, Group<m_hexagon_Features_Group>,
   Flags<[CC1Option]>, HelpText<"Enable generation of new-value stores">;
 def mno_nvs : Flag<["-"], "mno-nvs">, Group<m_hexagon_Features_Group>,
   Flags<[CC1Option]>, HelpText<"Disable generation of new-value stores">;
-def mpackets2 : Flag<["-"], "mpackets">, Group<m_hexagon_Features_Group>,
-  Flags<[CC1Option]>, HelpText<"Enable generation of instruction packets">;
-
 
 
 // X86 feature flags

@@ -82,6 +82,7 @@
 #include "llvm/Transforms/Utils/SymbolRewriter.h"
 #include "llvm/Transforms/Utils/UniqueInternalLinkageNames.h"
 #include "llvm/Transforms/Instrumentation/PrintBlocks.h"
+#include "llvm/Support/CommandLine.h"
 
 #include <memory>
 using namespace clang;

@@ -7,6 +7,7 @@
 #include <string>
 #include "llvm/IR/Instruction.h"
 #include "llvm/IR/ValueSymbolTable.h"
+#include "llvm/Support/CommandLine.h"
 
 using namespace llvm;
 using namespace std;

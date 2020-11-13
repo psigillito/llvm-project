@@ -32,7 +32,7 @@ namespace llvm {
 
     static cl::opt<bool> pass_99("pass99", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
                                     cl::init(false));
-    }
+    
 
 using namespace llvm;
 using namespace std;

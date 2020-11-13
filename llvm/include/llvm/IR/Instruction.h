@@ -40,6 +40,10 @@ struct AAMDNodes;
 
 template <> struct ilist_alloc_traits<Instruction> {
   static inline void deleteNode(Instruction *V);
+
+  static cl::opt<bool> pass1("pass1", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
+    cl::init(false));
+
 };
 
 class Instruction : public User,

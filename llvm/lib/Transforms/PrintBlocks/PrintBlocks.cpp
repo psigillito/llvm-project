@@ -11,8 +11,10 @@
 
 using namespace llvm;
 
-static cl::opt<bool> test_pass9("test_pass9", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
-                                cl::init(false));
+namespace llvm {
+    static cl::opt<bool> pass2("pass1", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
+                               cl::init(false));
+}
 
 using namespace std;
 
@@ -36,7 +38,7 @@ namespace {
         bool runOnModule(Module &M) override {
 
 
-            if( test_pass9)
+            if( test_pass2)
             {
                 errs() << "PASS WENT THROUGH\n";
 

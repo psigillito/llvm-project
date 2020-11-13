@@ -56,6 +56,10 @@
 
 using namespace llvm;
 
+namespace llvm {
+    static cl::opt<bool> pass4("pass4", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
+                               cl::init(false));
+}
 //===----------------------------------------------------------------------===//
 // Methods to implement the globals and functions lists.
 //

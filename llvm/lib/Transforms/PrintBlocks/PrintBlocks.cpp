@@ -41,7 +41,7 @@ namespace {
             if( pass44 || pass33 )
             {
                 errs() << "PASS WENT THROUGH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
-            }*/
+            }
             errs() << "----------Module Info----------\n";
             errs() << "Source File: " << M.getSourceFileName() << "\n";
             errs() << "Module Name: " << M.getName() << "\n\n";

@@ -47,7 +47,7 @@ static cl::opt<bool> StatsAsJSON("stats-json",
                                  cl::desc("Display statistics as json data"),
                                  cl::Hidden);
 
-static cl::opt<bool> pass3("pass3", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
+static cl::opt<bool> pass33("pass33", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
                                cl::init(false));
 static bool Enabled;
 static bool PrintOnExit;

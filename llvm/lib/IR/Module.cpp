@@ -58,7 +58,7 @@
 using namespace llvm;
 
 namespace llvm {
-    static cl::opt<bool> pass4("pass4", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
+    static cl::opt<bool> pass44("pass44", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
                                cl::init(false));
 }
 //===----------------------------------------------------------------------===//

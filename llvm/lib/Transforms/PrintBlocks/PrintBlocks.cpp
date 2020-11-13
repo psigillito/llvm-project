@@ -12,7 +12,7 @@
 using namespace llvm;
 
 namespace llvm {
-    static cl::opt<bool> pass2("pass2", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
+    static cl::opt<bool> pass22("pass22", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
                                cl::init(false));
 }
 

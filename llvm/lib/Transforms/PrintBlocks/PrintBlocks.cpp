@@ -23,7 +23,6 @@ namespace {
 
     struct PrintBlocks : public ModulePass
     {
-        cl::opt<bool> TESTY2("TESTY2", cl::desc("Don't print informational messages"), cl::NotHidden);
 
         static char ID;
         PrintBlocks() : ModulePass(ID) {};

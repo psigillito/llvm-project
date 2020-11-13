@@ -17,9 +17,11 @@ const char* double_indent = "        ";
 const char* triple_indent = "            ";
 //anonymous namespace to limit to this file
 
-cl::opt<bool> TESTY1("TESTY1", cl::desc("Don't print informational messages"), cl::NotHidden);
 
 namespace {
+
+    cl::opt<bool> pbarg("pbarg", cl::desc("Don't print informational messages"), cl::NotHidden);
+
 
     struct PrintBlocks : public ModulePass
     {

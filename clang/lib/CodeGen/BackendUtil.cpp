@@ -361,6 +361,9 @@ static void addDataFlowSanitizerPass(const PassManagerBuilder &Builder,
 //takes a builder and a pass manager
 static void addPrintBlocksPass(const PassManagerBuilder &Builder,legacy::PassManagerBase &PM)
 {
+
+  cl::opt<bool> TESTY3("TESTY3", cl::desc("Don't print informational messages"), cl::NotHidden);
+
   //declare a build
   const PassManagerBuilderWrapper &BuilderWrapper = static_cast<const PassManagerBuilderWrapper&>(Builder);
 

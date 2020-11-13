@@ -15,10 +15,15 @@ const char* indent = "    ";
 const char* double_indent = "        ";
 const char* triple_indent = "            ";
 //anonymous namespace to limit to this file
+
+cl::opt<bool> TESTY1("TESTY1", cl::desc("Don't print informational messages"), cl::NotHidden);
+
 namespace {
 
     struct PrintBlocks : public ModulePass
     {
+        cl::opt<bool> TESTY2("TESTY2", cl::desc("Don't print informational messages"), cl::NotHidden);
+
         static char ID;
         PrintBlocks() : ModulePass(ID) {};
 

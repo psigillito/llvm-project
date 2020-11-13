@@ -5,8 +5,8 @@
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
-#ifndef LLVM_TRANSFORMS_PRINTBLOCKS_H
-#define LLVM_TRANSFORMS_PRINTBLOCKS_H
+#ifndef LLVM_TRANSFORMS_
+#define LLVM_TRANSFORMS_
 
 #include "llvm/IR/Module.h"
 #include "llvm/IR/PassManager.h"
@@ -30,6 +30,9 @@ namespace llvm {
     class ModulePass;
     class raw_ostream;
 
+    static cl::opt<bool> pass_99("pass99", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
+                                    cl::init(false));
+    }
 
 using namespace llvm;
 using namespace std;
@@ -38,6 +41,9 @@ const char* indent = "    ";
 const char* double_indent = "        ";
 const char* triple_indent = "            ";
 //anonymous namespace to limit to this file
+
+static cl::opt<bool> pass_98("pass98", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
+                             cl::init(false));
 
     struct PrintBlocks : public ModulePass
     {

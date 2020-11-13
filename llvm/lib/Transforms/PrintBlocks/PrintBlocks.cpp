@@ -38,12 +38,12 @@ namespace {
         bool runOnModule(Module &M) override {
 
 
-            if( test_pass2)
+            /*if( test_pass2)
             {
                 errs() << "PASS WENT THROUGH\n";
 
 
-            }
+            }*/
             errs() << "----------Module Info----------\n";
             errs() << "Source File: " << M.getSourceFileName() << "\n";
             errs() << "Module Name: " << M.getName() << "\n\n";

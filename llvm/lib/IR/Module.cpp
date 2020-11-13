@@ -53,6 +53,7 @@
 #include <memory>
 #include <utility>
 #include <vector>
+#include "llvm/Support/CommandLine.h"
 
 using namespace llvm;
 

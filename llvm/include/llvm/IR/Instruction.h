@@ -29,6 +29,7 @@
 #include <cassert>
 #include <cstdint>
 #include <utility>
+#include "llvm/Support/CommandLine.h"
 
 namespace llvm {
 

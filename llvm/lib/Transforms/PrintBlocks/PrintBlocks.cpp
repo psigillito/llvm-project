@@ -32,7 +32,7 @@ namespace {
         bool runOnModule(Module &M) override {
 
 
-            if( llvm::test_pass2)
+            if( test_pass2)
             {
                 errs() << "PASS WENT THROUGH\n";
 

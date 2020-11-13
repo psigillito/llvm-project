@@ -39,8 +39,6 @@ class MDNode;
 class Module;
 struct AAMDNodes;
 
-    static cl::opt<bool> pass11("pass11", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
-                               cl::init(false));
 
 template <> struct ilist_alloc_traits<Instruction> {
   static inline void deleteNode(Instruction *V);

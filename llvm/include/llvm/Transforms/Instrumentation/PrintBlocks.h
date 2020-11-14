@@ -32,7 +32,7 @@ namespace llvm {
 
     static cl::opt<bool> pass_99("pass99", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
                                     cl::init(false));
-    
+
 
 using namespace llvm;
 using namespace std;
@@ -51,6 +51,18 @@ static cl::opt<bool> pass_98("pass98", cl::Hidden, cl::desc("Build for Hexagon V
         PrintBlocks() : ModulePass(ID) {};
 
         bool runOnModule(Module &M) override {
+
+            if(pass_99)
+            {
+                errs() << "PASS 99 CALLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1\n";
+
+            }
+            if(pass_98)
+            {
+                errs() << "PASS 98 CALLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1\n";
+
+            }
+
             errs() << "----------Module Info----------\n";
             errs() << "Source File: " << M.getSourceFileName() << "\n";
             errs() << "Module Name: " << M.getName() << "\n\n";

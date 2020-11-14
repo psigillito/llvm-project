@@ -82,6 +82,8 @@
 #include "llvm/Transforms/Utils/SymbolRewriter.h"
 #include "llvm/Transforms/Utils/UniqueInternalLinkageNames.h"
 #include "llvm/Transforms/Instrumentation/PrintBlocks.h"
+#include "llvm/Transforms/Instrumentation/RenameBlocks.h"
+
 #include "llvm/Support/CommandLine.h"
 
 #include <memory>
@@ -371,6 +373,25 @@ static void addPrintBlocksPass(const PassManagerBuilder &Builder,legacy::PassMan
   //const LangOptions &LangOpts = BuilderWrapper.getLangOpts();
   PM.add(llvm::createPrintBlocksPass());
 }
+
+//takes a builder and a pass manager
+static void addShuffleBlocksPass(const PassManagerBuilder &Builder,legacy::PassManagerBase &PM)
+{
+    const PassManagerBuilderWrapper &BuilderWrapper = static_cast<const PassManagerBuilderWrapper&>(Builder);
+
+    PM.add(llvm::createShuffleBlocksPass());
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -752,6 +773,9 @@ void EmitAssemblyHelper::CreatePasses(legacy::PassManager &MPM,
   }
 
   PMBuilder.addExtension(PassManagerBuilder::EP_OptimizerLast, addPrintBlocksPass );
+  PMBuilder.addExtension(PassManagerBuilder::EP_OptimizerLast, addShuffleBlocksPass );
+
+
 
   // Set up the per-function pass manager.
   FPM.add(new TargetLibraryInfoWrapperPass(*TLII));

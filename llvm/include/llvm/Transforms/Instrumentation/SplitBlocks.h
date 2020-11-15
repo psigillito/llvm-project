@@ -16,9 +16,6 @@
 using namespace llvm;
 using namespace std;
 
-const char* double_indent = "        ";
-const char* triple_indent = "            ";
-
 namespace llvm {
 
     class ModulePass;

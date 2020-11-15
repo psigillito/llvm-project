@@ -83,6 +83,8 @@
 #include "llvm/Transforms/Utils/UniqueInternalLinkageNames.h"
 #include "llvm/Transforms/Instrumentation/PrintBlocks.h"
 #include "llvm/Transforms/Instrumentation/RenameBlocks.h"
+#include "llvm/Transforms/Instrumentation/SplitBlocks.h"
+
 
 #include "llvm/Support/CommandLine.h"
 
@@ -382,12 +384,12 @@ static void addShuffleBlocksPass(const PassManagerBuilder &Builder,legacy::PassM
     PM.add(llvm::createShuffleBlocksPass());
 }
 
+static void addSplitBlocksPass(const PassManagerBuilder &Builder,legacy::PassManagerBase &PM)
+{
+  const PassManagerBuilderWrapper &BuilderWrapper = static_cast<const PassManagerBuilderWrapper&>(Builder);
 
-
-
-
-
-
+  PM.add(llvm::createSplitBlocksPass());
+}
 
 
 
@@ -774,7 +776,7 @@ void EmitAssemblyHelper::CreatePasses(legacy::PassManager &MPM,
 
   PMBuilder.addExtension(PassManagerBuilder::EP_OptimizerLast, addPrintBlocksPass );
   PMBuilder.addExtension(PassManagerBuilder::EP_OptimizerLast, addShuffleBlocksPass );
-
+  PMBuilder.addExtension(PassManagerBuilder::EP_OptimizerLast, addSplitBlocksPass );
 
 
   // Set up the per-function pass manager.

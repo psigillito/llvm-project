@@ -30,10 +30,6 @@ namespace llvm {
     class ModulePass;
     class raw_ostream;
 
-    static cl::opt<bool> pass_99("pass99", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
-                                    cl::init(false));
-
-
 using namespace llvm;
 using namespace std;
 
@@ -42,7 +38,7 @@ const char* double_indent = "        ";
 const char* triple_indent = "            ";
 //anonymous namespace to limit to this file
 
-static cl::opt<bool> pass_98("pass98", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
+static cl::opt<bool> print_blocks("print_blocks", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
                              cl::init(false));
 
     struct PrintBlocks : public ModulePass
@@ -52,76 +48,70 @@ static cl::opt<bool> pass_98("pass98", cl::Hidden, cl::desc("Build for Hexagon V
 
         bool runOnModule(Module &M) override {
 
-            if(pass_99)
+            errs() << "----------- Print Blocks Called -----------\n";
+
+            if(print_blocks)
             {
-                errs() << "PASS 99 CALLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1\n";
+                errs() << "----------Module Info----------\n";
+                errs() << "Source File: " << M.getSourceFileName() << "\n";
+                errs() << "Module Name: " << M.getName() << "\n\n";
 
-            }
-            if(pass_98)
-            {
-                errs() << "PASS 98 CALLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1\n";
-
-            }
-
-            errs() << "----------Module Info----------\n";
-            errs() << "Source File: " << M.getSourceFileName() << "\n";
-            errs() << "Module Name: " << M.getName() << "\n\n";
-
-            //print global vars
-            errs() << "GLOBAL VARIABaLES\n";
-            for( auto global_iter = M.global_begin(); global_iter != M.global_end(); ++global_iter)
-            {
-                errs() << indent;
-                global_iter->print(errs());
-                errs() << "\n";
-            }
-
-            errs() << "ALIASES" << "\n";
-            for( auto alias_iter = M.alias_begin(); alias_iter != M.alias_end(); ++alias_iter)
-            {
-                errs() << indent;
-                alias_iter->print(errs());
-                errs() << "\n";
-            }
-
-            errs() << "DATA LAYOUT" << "\n";
-            errs() << indent <<M.getDataLayoutStr() << "\n";
-
-            errs() <<"FUNCTIONS\n";
-
-            errs() << indent << "Number of Functions: " << M.getFunctionList().size() << "\n";
-
-            for( const auto& func : M.getFunctionList())
-            {
-                errs() << double_indent << "Function Name: " << func.getName() << "\n";
-                errs() << triple_indent <<"Number of Args: " << func.arg_size() << "\n";
-                for( auto x = func.arg_begin(); x != func.arg_end(); ++x)
+                //print global vars
+                errs() << "GLOBAL VARIABaLES\n";
+                for( auto global_iter = M.global_begin(); global_iter != M.global_end(); ++global_iter)
                 {
-                    errs() << triple_indent <<"Arg Name: " ;
-                    x->getType()->print(errs());
-                    errs() <<"\n";
-
+                    errs() << indent;
+                    global_iter->print(errs());
+                    errs() << "\n";
                 }
 
-                errs() << triple_indent <<"Blocks: " << func.getBasicBlockList().size() << "\n";
-
-                if(func.size())
+                errs() << "ALIASES" << "\n";
+                for( auto alias_iter = M.alias_begin(); alias_iter != M.alias_end(); ++alias_iter)
                 {
-                    for (auto b = func.begin(); b != func.end(); ++b)
+                    errs() << indent;
+                    alias_iter->print(errs());
+                    errs() << "\n";
+                }
+
+                errs() << "DATA LAYOUT" << "\n";
+                errs() << indent <<M.getDataLayoutStr() << "\n";
+
+                errs() <<"FUNCTIONS\n";
+
+                errs() << indent << "Number of Functions: " << M.getFunctionList().size() << "\n";
+
+                for( const auto& func : M.getFunctionList())
+                {
+                    errs() << double_indent << "Function Name: " << func.getName() << "\n";
+                    errs() << triple_indent <<"Number of Args: " << func.arg_size() << "\n";
+                    for( auto x = func.arg_begin(); x != func.arg_end(); ++x)
                     {
-                        errs() << "\n" << triple_indent << "--Basic Block --\n";
+                        errs() << triple_indent <<"Arg Name: " ;
+                        x->getType()->print(errs());
+                        errs() <<"\n";
 
-                        errs() << triple_indent << "Label: ";
-                        errs() << "\n";                        b->printAsOperand(errs(), false);
+                    }
 
+                    errs() << triple_indent <<"Blocks: " << func.getBasicBlockList().size() << "\n";
 
-                        for ( auto instr = b->begin(); instr != b->end(); ++instr)
+                    if(func.size())
+                    {
+                        for (auto b = func.begin(); b != func.end(); ++b)
                         {
-                            errs() << triple_indent << *instr << "\n";
+                            errs() << "\n" << triple_indent << "--Basic Block --\n";
+
+                            errs() << triple_indent << "Label: ";
+                            errs() << "\n";                        b->printAsOperand(errs(), false);
+
+
+                            for ( auto instr = b->begin(); instr != b->end(); ++instr)
+                            {
+                                errs() << triple_indent << *instr << "\n";
+                            }
                         }
                     }
+                    errs() << "\n";
                 }
-                errs() << "\n";
             }
             return false;
         }

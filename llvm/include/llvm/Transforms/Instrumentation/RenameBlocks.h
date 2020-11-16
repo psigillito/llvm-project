@@ -25,7 +25,7 @@ namespace llvm {
     class ModulePass;
     class raw_ostream;
 
-    static cl::opt<bool> shuffle_blocks("shuffle_blocks", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
+    static cl::opt<bool> shuffle_blocks("shuffle_blocks", cl::Hidden, cl::desc("Shuffle basic blocks based on number given"),
                                  cl::init(false));
     using namespace std;
 

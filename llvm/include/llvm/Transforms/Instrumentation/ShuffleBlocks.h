@@ -53,49 +53,52 @@ namespace llvm {
 
         void function_block_shuffle(llvm::Function& x)
         {
-            int size = x.getBasicBlockList().size() - 1;
 
-            //only shuffle if enough, some functions are empty (demarked by size of -1)
-            if( size > 2)
+            if( shuffle_blocks )
             {
-                auto& b_list = x.getBasicBlockList();
+                errs() << "----------- Shuffle Blocks Called -----------\n";
 
-                //do range from second element
-                //cannot change the first element
-                for(int i = 1; i < size; ++i)
-                {
-                    int rand_range = size - i + 1;
-                    int replace_index = (rand() % rand_range) + 1;
+                int size = x.getBasicBlockList().size() - 1;
 
-                    //get iter before each node we want to swap
-                    auto iter1 = std::next(b_list.begin(), rand_range); //end of list
-                    auto iter2 = std::next(b_list.begin(), replace_index);
-                    --iter1;
-                    --iter2;
+                //only shuffle if enough, some functions are empty (demarked by size of -1)
+                if (size > 2) {
+                    auto &b_list = x.getBasicBlockList();
 
-                    if( rand_range != replace_index)
-                    {
-                        auto node_one = iter1->getNextNode();
+                    //do range from second element
+                    //cannot change the first element
+                    for (int i = 1; i < size; ++i) {
+                        int rand_range = size - i + 1;
+                        int replace_index = (rand() % rand_range) + 1;
 
-                        //get the iter we are removing
-                        auto remove_iter1 = iter1;
-                        auto remove_iter2 = iter2;
-                        ++remove_iter1;
-                        ++remove_iter2;
+                        //get iter before each node we want to swap
+                        auto iter1 = std::next(b_list.begin(), rand_range); //end of list
+                        auto iter2 = std::next(b_list.begin(), replace_index);
+                        --iter1;
+                        --iter2;
 
-                        b_list.remove(remove_iter1);
-                        b_list.insertAfter(iter2, node_one);
+                        if (rand_range != replace_index) {
+                            auto node_one = iter1->getNextNode();
 
-                        //inserted the back value.
-                        //now get the next node.
-                        auto node_two = node_one->getNextNode();
-                        iter2++;
-                        iter2++;
-                        b_list.remove(iter2);
-                        auto iter_final = std::next(b_list.begin(), (rand_range -1));
-                        b_list.insertAfter(iter_final, node_two);
+                            //get the iter we are removing
+                            auto remove_iter1 = iter1;
+                            auto remove_iter2 = iter2;
+                            ++remove_iter1;
+                            ++remove_iter2;
+
+                            b_list.remove(remove_iter1);
+                            b_list.insertAfter(iter2, node_one);
+
+                            //inserted the back value.
+                            //now get the next node.
+                            auto node_two = node_one->getNextNode();
+                            iter2++;
+                            iter2++;
+                            b_list.remove(iter2);
+                            auto iter_final = std::next(b_list.begin(), (rand_range - 1));
+                            b_list.insertAfter(iter_final, node_two);
 
 
+                        }
                     }
                 }
             }

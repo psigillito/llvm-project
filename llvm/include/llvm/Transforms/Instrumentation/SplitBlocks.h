@@ -1,5 +1,3 @@
-/********************************************/
-
 #include "llvm/ADT/Statistic.h"
 #include "llvm/IR/Function.h"
 #include "llvm/Pass.h"
@@ -21,7 +19,7 @@ namespace llvm {
     class ModulePass;
     class raw_ostream;
 
-    static cl::opt<bool> split_blocks("split blocks", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
+    static cl::opt<bool> split_blocks("split blocks", cl::Hidden, cl::desc("Split Blocks into give size"),
                                  cl::init(false));
     using namespace std;
 
@@ -32,35 +30,39 @@ namespace llvm {
 
         bool runOnModule(Module &M) override {
 
-            srand (time(NULL));
+            if( split_blocks )
+            {
+                srand (time(NULL));
 
-            for (auto &func : M.getFunctionList()) {
-                //if we have a block to split
-                if( func.getBasicBlockList().size() )
-                {
-                    //get list of blocks in function
-                    auto& block_list = func.getBasicBlockList();
-
-                    //if the function is not empty (does happen)
-                    if( !block_list.empty())
+                for (auto &func : M.getFunctionList()) {
+                    //if we have a block to split
+                    if( func.getBasicBlockList().size() )
                     {
-                        auto iter = block_list.begin();
-                        for(iter = block_list.begin(); iter != block_list.end(); ++iter)
+                        //get list of blocks in function
+                        auto& block_list = func.getBasicBlockList();
+
+                        //if the function is not empty (does happen)
+                        if( !block_list.empty())
                         {
-                            if(iter->size() > 2)
+                            auto iter = block_list.begin();
+                            for(iter = block_list.begin(); iter != block_list.end(); ++iter)
                             {
-                                llvm::BasicBlock::iterator instr_iter = iter->begin();
-                                instr_iter++;
-                                iter->splitBasicBlock(instr_iter);
+                                if(iter->size() > 2)
+                                {
+                                    llvm::BasicBlock::iterator instr_iter = iter->begin();
+                                    instr_iter++;
+                                    iter->splitBasicBlock(instr_iter);
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            for (auto &func : M.getFunctionList()) {
-                errs() << double_indent << " Function Name: " << func.getName() << "\n";
-                errs() << triple_indent << "Number of Blocks: " << func.getBasicBlockList().size() << "\n";
+                for (auto &func : M.getFunctionList()) {
+                    errs() << double_indent << " Function Name: " << func.getName() << "\n";
+                    errs() << triple_indent << "Number of Blocks: " << func.getBasicBlockList().size() << "\n";
+                }
+
             }
             return false;
         }

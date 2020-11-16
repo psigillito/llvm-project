@@ -19,7 +19,7 @@ namespace llvm {
     class ModulePass;
     class raw_ostream;
 
-    static cl::opt<bool> split_blocks("split blocks", cl::Hidden, cl::desc("Split Blocks into give size"),
+    static cl::opt<bool> split_blocks("split_blocks", cl::Hidden, cl::desc("Split Blocks into give size"),
                                  cl::init(false));
     using namespace std;
 

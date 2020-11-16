@@ -32,6 +32,8 @@ namespace llvm {
 
             if( split_blocks )
             {
+                errs() << "----------- Shuffle Blocks Called -----------\n";
+
                 srand (time(NULL));
 
                 for (auto &func : M.getFunctionList()) {

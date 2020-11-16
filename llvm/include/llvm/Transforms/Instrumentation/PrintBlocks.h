@@ -48,16 +48,17 @@ static cl::opt<bool> print_blocks("print_blocks", cl::Hidden, cl::desc("Build fo
 
         bool runOnModule(Module &M) override {
 
-            errs() << "----------- Print Blocks Called -----------\n";
 
             if(print_blocks)
             {
+                errs() << "----------- Print Blocks Called -----------\n";
+
                 errs() << "----------Module Info----------\n";
                 errs() << "Source File: " << M.getSourceFileName() << "\n";
                 errs() << "Module Name: " << M.getName() << "\n\n";
 
                 //print global vars
-                errs() << "GLOBAL VARIABaLES\n";
+                errs() << "GLOBAL VARIABLES\n";
                 for( auto global_iter = M.global_begin(); global_iter != M.global_end(); ++global_iter)
                 {
                     errs() << indent;

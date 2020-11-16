@@ -54,9 +54,6 @@ namespace llvm {
         void function_block_shuffle(llvm::Function& x)
         {
 
-            if( shuffle_blocks )
-            {
-                errs() << "----------- Shuffle Blocks Called -----------\n";
 
                 int size = x.getBasicBlockList().size() - 1;
 
@@ -99,62 +96,59 @@ namespace llvm {
 
 
                         }
-                    }
                 }
             }
         }
 
         bool runOnModule(Module &M) override {
 
-            srand (time(NULL));
+            if( shuffle_blocks ) {
+                errs() << "----------- Shuffle Blocks Called -----------\n";
 
-            for( auto& func : M.functions())
-            {
-                if( func.size())
-                {
-                    int counter = 0;
-                    for(auto& block : func.getBasicBlockList())
-                    {
-                        string x = to_string(counter);
-                        block.setName(func.getName() + x);
+                srand(time(NULL));
 
-                        std::string Str;
-                        raw_string_ostream OS(Str);
-                        block.printAsOperand(OS, false);
+                for (auto &func : M.functions()) {
+                    if (func.size()) {
+                        int counter = 0;
+                        for (auto &block : func.getBasicBlockList()) {
+                            string x = to_string(counter);
+                            block.setName(func.getName() + x);
+
+                            std::string Str;
+                            raw_string_ostream OS(Str);
+                            block.printAsOperand(OS, false);
                         }
                     }
-            }
-
-            for( auto& func : M.getFunctionList())
-            {
-
-                function_block_shuffle(func);
-
-                //errs() <<"FUNCTION: " << func.getName() << "\n";
-
-                if(func.getBasicBlockList().size() > 2)
-                {
-                    auto& b_list = func.getBasicBlockList();
-
-                    auto r_iter = b_list.begin();
-                    r_iter++;
-
-                    auto testy_node = r_iter->getNextNode();
-
-                    auto r_iter2 = r_iter;
-
-                    r_iter++;
-                    r_iter2--;
-
-                    b_list.remove(r_iter);
-                    b_list.insertAfter(r_iter2,testy_node);
-
                 }
 
-                for(auto& bb : func.getBasicBlockList())
-                {
-                    bb.printAsOperand(errs(), false);
-                    errs() << '\n';
+                for (auto &func : M.getFunctionList()) {
+
+                    function_block_shuffle(func);
+
+                    //errs() <<"FUNCTION: " << func.getName() << "\n";
+
+                    if (func.getBasicBlockList().size() > 2) {
+                        auto &b_list = func.getBasicBlockList();
+
+                        auto r_iter = b_list.begin();
+                        r_iter++;
+
+                        auto testy_node = r_iter->getNextNode();
+
+                        auto r_iter2 = r_iter;
+
+                        r_iter++;
+                        r_iter2--;
+
+                        b_list.remove(r_iter);
+                        b_list.insertAfter(r_iter2, testy_node);
+
+                    }
+
+                    for (auto &bb : func.getBasicBlockList()) {
+                        bb.printAsOperand(errs(), false);
+                        errs() << '\n';
+                    }
                 }
             }
             return false;

@@ -82,7 +82,7 @@
 #include "llvm/Transforms/Utils/SymbolRewriter.h"
 #include "llvm/Transforms/Utils/UniqueInternalLinkageNames.h"
 #include "llvm/Transforms/Instrumentation/PrintBlocks.h"
-#include "llvm/Transforms/Instrumentation/RenameBlocks.h"
+#include "llvm/Transforms/Instrumentation/ShuffleBlocks.h"
 #include "llvm/Transforms/Instrumentation/SplitBlocks.h"
 
 

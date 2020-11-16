@@ -31,10 +31,10 @@ namespace llvm {
 
     bool always_true() {return true;}
 
-    struct RenameBlocks : public ModulePass
+    struct ShuffleBlocks : public ModulePass
     {
         static char ID;
-        RenameBlocks() : ModulePass(ID) {}
+        ShuffleBlocks() : ModulePass(ID) {}
 
         void shuffle(std::list<int>& passed_in)
         {
@@ -43,7 +43,6 @@ namespace llvm {
             {
                 int rand_range = (passed_in.size() - 1) - i;
                 int replace_index = rand() % rand_range;
-                errs() << "rand index: " << replace_index << '\n';
 
                 auto iter1 = std::next(passed_in.begin(), replace_index);
                 auto iter2 = std::next(passed_in.begin(), rand_range);
@@ -128,7 +127,7 @@ namespace llvm {
 
                 function_block_shuffle(func);
 
-                errs() <<"FUNCTION: " << func.getName() << "\n";
+                //errs() <<"FUNCTION: " << func.getName() << "\n";
 
                 if(func.getBasicBlockList().size() > 2)
                 {
@@ -149,8 +148,6 @@ namespace llvm {
 
                 }
 
-
-
                 for(auto& bb : func.getBasicBlockList())
                 {
                     bb.printAsOperand(errs(), false);
@@ -161,10 +158,10 @@ namespace llvm {
         }
     };
 
-    char RenameBlocks::ID = 0;
+    char ShuffleBlocks::ID = 0;
 
     ModulePass *createShuffleBlocksPass() {
-        return new RenameBlocks();
+        return new ShuffleBlocks();
     };
 
 }

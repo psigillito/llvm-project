@@ -19,7 +19,7 @@ namespace llvm {
     class ModulePass;
     class raw_ostream;
 
-    static cl::opt<bool> split_blocks("split_blocks", cl::Hidden, cl::desc("Split Blocks into give size"),
+    static cl::opt<int> split_blocks("split_blocks", cl::Hidden, cl::desc("Split Blocks into give size"),
                                  cl::init(false));
     using namespace std;
 
@@ -32,9 +32,7 @@ namespace llvm {
 
             if( split_blocks )
             {
-                errs() << "----------- Shuffle Blocks Called -----------\n";
-
-                srand (time(NULL));
+                errs() << "----------- Split Blocks Called -----------\n";
 
                 for (auto &func : M.getFunctionList()) {
                     //if we have a block to split
@@ -49,7 +47,7 @@ namespace llvm {
                             auto iter = block_list.begin();
                             for(iter = block_list.begin(); iter != block_list.end(); ++iter)
                             {
-                                if(iter->size() > 2)
+                                if(iter->size() > split_blocks) //instructions greater than number of blocks to be split into
                                 {
                                     llvm::BasicBlock::iterator instr_iter = iter->begin();
                                     instr_iter++;

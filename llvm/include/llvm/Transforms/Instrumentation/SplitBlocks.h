@@ -45,7 +45,7 @@ namespace llvm {
                         auto iter = block_list.begin();
                         for(iter = block_list.begin(); iter != block_list.end(); ++iter)
                         {
-                            intsr_count += iter->size();
+                            instr_count += iter->size();
                         }
                     }
                 }
@@ -87,7 +87,7 @@ namespace llvm {
                         auto iter = block_list.begin();
                         for(iter = block_list.begin(); iter != block_list.end(); ++iter)
                         {
-                            intsr_count += iter->size();
+                            instr_count += iter->size();
                         }
                     }
                 }

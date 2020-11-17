@@ -68,7 +68,7 @@ namespace llvm {
                             {
                                 if(iter->size() > split_blocks) //instructions greater than number of blocks to be split into
                                 {
-                                    auto instr_iter = std::next(iter.begin(), split_blocks);
+                                    auto instr_iter = std::next(iter->begin(), split_blocks);
                                     iter->splitBasicBlock(instr_iter);
                                 }
                             }

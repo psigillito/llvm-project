@@ -34,6 +34,25 @@ namespace llvm {
             {
                 errs() << "----------- Split Blocks Called -----------\n";
 
+                double block_count = 0;
+                double instr_count = 0;
+                for(auto &func : M.getFunctionList())
+                {
+                    block_count += func.getBasicBlockList().size();
+                    auto& block_list = func.getBasicBlockList();
+                    if( !block_list.empty())
+                    {
+                        auto iter = block_list.begin();
+                        for(iter = block_list.begin(); iter != block_list.end(); ++iter)
+                        {
+                            intsr_count += iter->size();
+                        }
+                    }
+                }
+                errs() << "Before: \n"<< "  Number of blocks: " << block_count;
+                errs() << "  Instr. count: " << instr_count << "\n";
+                errs() << "  average block size (# of instr): " << (instr_count / block_count) << "\n";
+
                 for (auto &func : M.getFunctionList()) {
                     //if we have a block to split
                     if( func.getBasicBlockList().size() )
@@ -50,7 +69,7 @@ namespace llvm {
                                 if(iter->size() > split_blocks) //instructions greater than number of blocks to be split into
                                 {
                                     llvm::BasicBlock::iterator instr_iter = iter->begin();
-                                    instr_iter++;
+                                    auto instr_iter = std::next(iter.begin(), split_blocks);
                                     iter->splitBasicBlock(instr_iter);
                                 }
                             }
@@ -58,11 +77,24 @@ namespace llvm {
                     }
                 }
 
-                for (auto &func : M.getFunctionList()) {
-                    errs() << double_indent << " Function Name: " << func.getName() << "\n";
-                    errs() << triple_indent << "Number of Blocks: " << func.getBasicBlockList().size() << "\n";
+                block_count = 0;
+                instr_count = 0;
+                for(auto &func : M.getFunctionList())
+                {
+                    block_count += func.getBasicBlockList().size();
+                    auto& block_list = func.getBasicBlockList();
+                    if( !block_list.empty())
+                    {
+                        auto iter = block_list.begin();
+                        for(iter = block_list.begin(); iter != block_list.end(); ++iter)
+                        {
+                            intsr_count += iter->size();
+                        }
+                    }
                 }
-
+                errs() << "After: \n"<< "  Number of blocks: " << block_count;
+                errs() << "  Instr. count: " << instr_count << "\n";
+                errs() << "  average block size (# of instr): " << (instr_count / block_count) << "\n";
             }
             return false;
         }

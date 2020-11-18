@@ -34,8 +34,8 @@ namespace llvm {
             {
                 errs() << "----------- Split Blocks Called -----------\n";
 
-                double block_count = 0;
-                double instr_count = 0;
+                unsigned long long int block_count = 0;
+                unsigned long long int instr_count = 0;
                 for(auto &func : M.getFunctionList())
                 {
                     block_count += func.getBasicBlockList().size();

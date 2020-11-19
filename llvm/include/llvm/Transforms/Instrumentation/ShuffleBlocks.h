@@ -145,10 +145,10 @@ namespace llvm {
 
                     }
 
-                    for (auto &bb : func.getBasicBlockList()) {
+                    /*for (auto &bb : func.getBasicBlockList()) {
                         bb.printAsOperand(errs(), false);
                         errs() << '\n';
-                    }
+                    }*/
                 }
             }
             return false;

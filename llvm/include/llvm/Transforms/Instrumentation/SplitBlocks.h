@@ -49,9 +49,11 @@ namespace llvm {
                         }
                     }
                 }
-                errs() << "Before: \n"<< "  Number of blocks: " << block_count;
-                errs() << "  Instr. count: " << instr_count << "\n";
-                errs() << "  average block size (# of instr): " << (instr_count / block_count) << "\n";
+                errs() << "Source File: " << M.getSourceFileName() << "\n";
+                errs() << "Module Name: " << M.getName() << "\n";
+                errs() << "Before: Number of blocks: " << block_count << "\n";
+                errs() << "Before: Instr. count: " << instr_count << "\n";
+                errs() << "Before: average block size (# of instr): " << (instr_count / block_count) << "\n";
 
                 for (auto &func : M.getFunctionList()) {
                     //if we have a block to split
@@ -91,9 +93,9 @@ namespace llvm {
                         }
                     }
                 }
-                errs() << "After: \n"<< "  Number of blocks: " << block_count;
-                errs() << "  Instr. count: " << instr_count << "\n";
-                errs() << "  average block size (# of instr): " << (instr_count / block_count) << "\n";
+                errs() << "After: Number of blocks: " << block_count << "\n";
+                errs() << "After: Instr. count: " << instr_count << "\n";
+                errs() << "After: average block size (# of instr): " << (instr_count / block_count) << "\n";
             }
             return false;
         }

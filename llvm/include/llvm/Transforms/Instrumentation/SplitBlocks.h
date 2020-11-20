@@ -53,7 +53,7 @@ namespace llvm {
                 errs() << "Module Name: " << M.getName() << "\n";
                 errs() << "Before: Number of blocks: " << block_count << "\n";
                 errs() << "Before: Instr. count: " << instr_count << "\n";
-                errs() << "Before: average block size (# of instr): " << (instr_count / block_count) << "\n";
+                errs() << "Before: average block size (# of instruction): " << (instr_count / block_count) << "\n";
 
                 for (auto &func : M.getFunctionList()) {
                     //if we have a block to split
@@ -70,11 +70,12 @@ namespace llvm {
                             //for each basic block
                             for(unsigned int i = 0; i < block_list.size(); ++i)
                             {
-                                auto block_iter = block_list.begin();
                                 auto block_iter = std::next(block_list.begin(), i);
 
 
-                                if( actual_block->size() > split_blocks)
+                                unsigned int temp = split_blocks;
+
+                                if( actual_block->size() > temp)
                                 {
                                     auto instr_iter = std::next(block_iter->begin(), split_blocks - 1);
                                     auto remaining_block = block_iter->splitBasicBlock(instr_iter);
@@ -82,7 +83,7 @@ namespace llvm {
                                     while(remaining_block->size() > split_blocks)
                                     {
                                         instr_iter = std::next(remaining_block->begin(), split_blocks - 1);
-                                        remaining_block = remaining_block->splitBasicBlock(instr_iter)
+                                        remaining_block = remaining_block->splitBasicBlock(instr_iter);
                                     }
                                 }
                             }

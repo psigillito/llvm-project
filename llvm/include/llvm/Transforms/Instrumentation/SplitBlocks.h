@@ -68,17 +68,22 @@ namespace llvm {
                         if( !block_list.empty())
                         {
                             //for each basic block
-                            for(int i = 0; i < block_list.size(); ++i)
+                            for(unsigned int i = 0; i < block_list.size(); ++i)
                             {
                                 auto block_iter = block_list.begin();
-                                block_iter = std::next(iter->begin(), i);
+                                auto block_iter = std::next(block_list.begin(), i);
 
-                                auto actual_block = *block_iter;
 
-                                while( actual_block->size() > split_blocks)
+                                if( actual_block->size() > split_blocks)
                                 {
-                                    auto instr_iter = std::next(actual_block->begin(), split_blocks - 1);
-                                    actual_block = actual_block->splitBasicBlock(instr_iter);
+                                    auto instr_iter = std::next(block_iter->begin(), split_blocks - 1);
+                                    auto remaining_block = block_iter->splitBasicBlock(instr_iter);
+
+                                    while(remaining_block->size() > split_blocks)
+                                    {
+                                        instr_iter = std::next(remaining_block->begin(), split_blocks - 1);
+                                        remaining_block = remaining_block->splitBasicBlock(instr_iter)
+                                    }
                                 }
                             }
                         }

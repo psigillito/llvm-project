@@ -62,16 +62,23 @@ namespace llvm {
                         //get list of blocks in function
                         auto& block_list = func.getBasicBlockList();
 
+                        auto new_blocks = block_list;
+
                         //if the function is not empty (does happen)
                         if( !block_list.empty())
                         {
-                            auto iter = block_list.begin();
-                            for(iter = block_list.begin(); iter != block_list.end(); ++iter)
+                            //for each basic block
+                            for(int i = 0; i < block_list.size(); ++i)
                             {
-                                if(iter->size() > split_blocks) //instructions greater than number of blocks to be split into
+                                auto block_iter = block_list.begin();
+                                block_iter = std::next(iter->begin(), i);
+
+                                auto actual_block = *block_iter;
+
+                                while( actual_block->size() > split_blocks)
                                 {
-                                    auto instr_iter = std::next(iter->begin(), split_blocks - 1);
-                                    iter->splitBasicBlock(instr_iter);
+                                    auto instr_iter = std::next(actual_block->begin(), split_blocks - 1);
+                                    actual_block = actual_block->splitBasicBlock(instr_iter);
                                 }
                             }
                         }

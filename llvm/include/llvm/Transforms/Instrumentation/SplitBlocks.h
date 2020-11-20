@@ -62,8 +62,6 @@ namespace llvm {
                         //get list of blocks in function
                         auto& block_list = func.getBasicBlockList();
 
-                        auto new_blocks = block_list;
-
                         //if the function is not empty (does happen)
                         if( !block_list.empty())
                         {
@@ -75,7 +73,7 @@ namespace llvm {
 
                                 unsigned int temp = split_blocks;
 
-                                if( actual_block->size() > temp)
+                                if( block_iter->size() > temp)
                                 {
                                     auto instr_iter = std::next(block_iter->begin(), split_blocks - 1);
                                     auto remaining_block = block_iter->splitBasicBlock(instr_iter);

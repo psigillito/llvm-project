@@ -51,7 +51,7 @@ namespace llvm {
                 }
                 errs() << "Source File: " << M.getSourceFileName() << "\n";
                 errs() << "Module Name: " << M.getName() << "\n";
-                errs() << "Before: Number of blocks: " << block_count << "\n";
+                errs() << "ABefore: Number of blocks: " << block_count << "\n";
                 errs() << "Before: Instr. count: " << instr_count << "\n";
                 errs() << "Before: average block size (# of instruction): " << (instr_count / block_count) << "\n";
 

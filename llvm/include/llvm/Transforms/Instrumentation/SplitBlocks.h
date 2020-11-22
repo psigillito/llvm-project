@@ -82,7 +82,7 @@ namespace llvm {
                                     {
                                         instr_iter = std::next(remaining_block->begin(), split_blocks - 1);
                                         string x = instr_iter->getOpcodeName();
-                                        errs() << "FOUND OUR BRANCHING " << x << "\n";
+z                                        errs() << "FOUND OUR BRANCHING " << x << "\n";
                                         remaining_block = remaining_block->splitBasicBlock(instr_iter);
                                     }
                                 }

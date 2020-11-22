@@ -55,23 +55,39 @@ namespace llvm {
                 errs() << "Before: Instr. count: " << instr_count << "\n";
                 errs() << "Before: average block size (# of instruction): " << (instr_count / block_count) << "\n";
 
-                if( block_iter->size() > split_blocks)
-                {
-                    auto instr_iter = std::next(block_iter->begin(), split_blocks - 1);
-
-                    string x = instr_iter->getOpcodeName();
-                    errs() << "FOUND OUR BRANCHING " << x << "\n";
-                    auto remaining_block = block_iter->splitBasicBlock(instr_iter);
-
-                    while(remaining_block->size() > split_blocks)
+                for (auto &func : M.getFunctionList()) {
+                    //if we have a block to split
+                    if( func.getBasicBlockList().size() )
                     {
-                        instr_iter = std::next(remaining_block->begin(), split_blocks - 1);
+                        //get list of blocks in function
+                        auto& block_list = func.getBasicBlockList();
 
-                        string x = instr_iter->getOpcodeName();
-                        errs() << "FOUND OUR BRANCHING " << x << "\n";
+                        //if the function is not empty (does happen)
+                        if( !block_list.empty())
+                        {
+                            //for each basic block
+                            for(unsigned int i = 0; i < block_list.size(); ++i)
+                            {
+                                auto block_iter = std::next(block_list.begin(), i);
 
+                                if( block_iter->size() > split_blocks)
+                                {
+                                    auto instr_iter = std::next(block_iter->begin(), split_blocks - 1);
+                                    string x = instr_iter->getOpcodeName();
+                                    errs() << "FOUND OUR BRANCHING " << x << "\n";
 
-                        remaining_block = remaining_block->splitBasicBlock(instr_iter);
+                                    auto remaining_block = block_iter->splitBasicBlock(instr_iter);
+
+                                    while(remaining_block->size() > split_blocks)
+                                    {
+                                        instr_iter = std::next(remaining_block->begin(), split_blocks - 1);
+                                        string x = instr_iter->getOpcodeName();
+                                        errs() << "FOUND OUR BRANCHING " << x << "\n";
+                                        remaining_block = remaining_block->splitBasicBlock(instr_iter);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 

@@ -55,27 +55,23 @@ namespace llvm {
                 errs() << "Before: Instr. count: " << instr_count << "\n";
                 errs() << "Before: average block size (# of instruction): " << (instr_count / block_count) << "\n";
 
-                for (auto &func : M.getFunctionList()) {
-                    //if we have a block to split
-                    if( func.getBasicBlockList().size() )
-                    {
-                        //get list of blocks in function
-                        auto& block_list = func.getBasicBlockList();
+                if( block_iter->size() > split_blocks)
+                {
+                    auto instr_iter = std::next(block_iter->begin(), split_blocks - 1);
 
-                        //if the function is not empty (does happen)
-                        if( !block_list.empty())
-                        {
-                            for( auto iter = block_list.begin(); iter != block_list.end(); ++iter)
-                            {
-                                //only split at instructions that are not the first or last instruction
-                                if(iter->size() > 2)
-                                {
-                                    llvm::BasicBlock::iterator instr_iter = iter->begin();
-                                    ++instr_iter;
-                                    iter->splitBasicBlock(instr_iter);
-                                }
-                            }
-                        }
+                    string x = instr_iter->getOpcodeName();
+                    errs() << "FOUND OUR BRANCHING " << x << "\n";
+                    auto remaining_block = block_iter->splitBasicBlock(instr_iter);
+
+                    while(remaining_block->size() > split_blocks)
+                    {
+                        instr_iter = std::next(remaining_block->begin(), split_blocks - 1);
+
+                        string x = instr_iter->getOpcodeName();
+                        errs() << "FOUND OUR BRANCHING " << x << "\n";
+
+
+                        remaining_block = remaining_block->splitBasicBlock(instr_iter);
                     }
                 }
 

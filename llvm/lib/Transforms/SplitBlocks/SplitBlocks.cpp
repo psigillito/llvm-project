@@ -75,6 +75,7 @@ namespace llvm {
                                 if( block_iter->size() > temp)
                                 {
                                     auto instr_iter = std::next(block_iter->begin(), split_blocks - 1);
+                                    auto remaining_block = block_iter->splitBasicBlock(instr_iter);
 
                                     while(remaining_block->size() > split_blocks)
                                     {

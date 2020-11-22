@@ -62,43 +62,23 @@ namespace llvm {
                         auto& block_list = func.getBasicBlockList();
 
                         //if the function is not empty (does happen)
-
-                        /*if( !block_list.empty())
-                        {
-                                auto iter = block_list.begin();
-                            for(iter = block_list.begin(); iter != block_list.end(); ++iter)
-                            {
-                                //only split at instructions that are not the first or last instruction
-                                if(iter->size() > 2)
-                                {
-                                    llvm::BasicBlock::iterator instr_iter = iter->begin();
-                                    ++instr_iter;
-                                    iter->splitBasicBlock(instr_iter);
-                                }
-                            }
-                        }*/
-
                         if( !block_list.empty())
                         {
                             //for each basic block
                             for(unsigned int i = 0; i < block_list.size(); ++i)
                             {
                                 auto block_iter = std::next(block_list.begin(), i);
-                                unsigned int temp = 5;
+
+
+                                unsigned int temp = split_blocks;
 
                                 if( block_iter->size() > temp)
                                 {
-                                    auto instr_iter = std::next(block_iter->begin(), temp - 1);
+                                    auto instr_iter = std::next(block_iter->begin(), split_blocks - 1);
 
-                                    errs() << "OPCODE: " << instr_iter->getOpcodeName();
-                                    auto remaining_block = block_iter->splitBasicBlock(instr_iter);
-
-                                    while(remaining_block->size() > temp)
+                                    while(remaining_block->size() > split_blocks)
                                     {
-
-                                        instr_iter = std::next(remaining_block->begin(), temp - 1);
-                                        errs() << "OPCODE2: " << instr_iter->getOpcodeName();
-
+                                        instr_iter = std::next(remaining_block->begin(), split_blocks - 1);
                                         remaining_block = remaining_block->splitBasicBlock(instr_iter);
                                     }
                                 }
@@ -137,5 +117,3 @@ namespace llvm {
     };
 
 }
-
-static RegisterPass<SplitBlocks> X("SplitBlocks", "Garbage");

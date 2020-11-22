@@ -65,27 +65,14 @@ namespace llvm {
                         //if the function is not empty (does happen)
                         if( !block_list.empty())
                         {
-                            //for each basic block
-                            for(unsigned int i = 0; i < block_list.size(); ++i)
+                            for( auto iter = block_list.begin(); iter != block_list.end(); ++iter)
                             {
-                                auto block_iter = std::next(block_list.begin(), i);
-                                unsigned int temp = 5;
-
-                                if( block_iter->size() > temp)
+                                //only split at instructions that are not the first or last instruction
+                                if(iter->size() > 2)
                                 {
-                                    auto instr_iter = std::next(block_iter->begin(), temp - 1);
-
-                                    errs() << "OPCODE: " << instr_iter->getOpcodeName();
-                                    auto remaining_block = block_iter->splitBasicBlock(instr_iter);
-
-                                    while(remaining_block->size() > temp)
-                                    {
-
-                                        instr_iter = std::next(remaining_block->begin(), temp - 1);
-                                        errs() << "OPCODE2: " << instr_iter->getOpcodeName();
-
-                                        remaining_block = remaining_block->splitBasicBlock(instr_iter);
-                                    }
+                                    llvm::BasicBlock::iterator instr_iter = iter->begin();
+                                    ++instr_iter;
+                                    iter->splitBasicBlock(instr_iter);
                                 }
                             }
                         }

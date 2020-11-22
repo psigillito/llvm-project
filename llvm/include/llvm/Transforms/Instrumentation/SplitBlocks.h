@@ -69,18 +69,21 @@ namespace llvm {
                             for(unsigned int i = 0; i < block_list.size(); ++i)
                             {
                                 auto block_iter = std::next(block_list.begin(), i);
-
-
-                                unsigned int temp = split_blocks;
+                                unsigned int temp = 5;
 
                                 if( block_iter->size() > temp)
                                 {
-                                    auto instr_iter = std::next(block_iter->begin(), split_blocks - 1);
+                                    auto instr_iter = std::next(block_iter->begin(), temp - 1);
+
+                                    errs() << "OPCODE: " << instr_iter->getOpcodeName();
                                     auto remaining_block = block_iter->splitBasicBlock(instr_iter);
 
-                                    while(remaining_block->size() > split_blocks)
+                                    while(remaining_block->size() > temp)
                                     {
-                                        instr_iter = std::next(remaining_block->begin(), split_blocks - 1);
+
+                                        instr_iter = std::next(remaining_block->begin(), temp - 1);
+                                        errs() << "OPCODE2: " << instr_iter->getOpcodeName();
+
                                         remaining_block = remaining_block->splitBasicBlock(instr_iter);
                                     }
                                 }

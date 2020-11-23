@@ -51,8 +51,8 @@ namespace llvm {
                 }
                 errs() << "Altered Backend Source File: " << M.getSourceFileName() << "\n";
                 errs() << "Module Name: " << M.getName() << "\n";
-                errs() << "ABefore: Number of blocks: " << block_count << "\n";
-                errs() << "Before: Instr. count: " << instr_count << "\n";
+                errs() << "Before: Number of blocks: " << block_count << "\n";
+                errs() << "Before: Instruction count: " << instr_count << "\n";
                 errs() << "Before: average block size (# of instruction): " << (instr_count / block_count) << "\n";
 
                 for (auto &func : M.getFunctionList()) {
@@ -73,16 +73,12 @@ namespace llvm {
                                 if( block_iter->size() > split_blocks)
                                 {
                                     auto instr_iter = std::next(block_iter->begin(), split_blocks - 1);
-                                    string x = instr_iter->getOpcodeName();
-                                    errs() << "FOUND OUR BRANCHING " << x << "\n";
-
                                     auto remaining_block = block_iter->splitBasicBlock(instr_iter);
 
-                                    while(remaining_block->size() > split_blocks)
+                                    bool cont = true;
+                                    while(remaining_block->size() > split_blocks && cont)
                                     {
                                         instr_iter = std::next(remaining_block->begin(), split_blocks - 1);
-                                        string x = instr_iter->getOpcodeName();
-                                        errs() << "FOUND OUR BRANCHING " << x << "\n";
                                         remaining_block = remaining_block->splitBasicBlock(instr_iter);
                                     }
                                 }

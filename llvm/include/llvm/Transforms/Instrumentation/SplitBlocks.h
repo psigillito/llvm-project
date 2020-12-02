@@ -16,27 +16,29 @@ using namespace std;
 
 namespace llvm {
 
-    class ModulePass;
+    class FunctionPass;
     class raw_ostream;
 
     static cl::opt<int> split_blocks("split_blocks", cl::Hidden, cl::desc("Split Blocks into give size"),
                                  cl::init(false));
     using namespace std;
 
-    struct SplitBlocks : public ModulePass
+    struct SplitBlocks : public FunctionPass
     {
         static char ID;
-        SplitBlocks() : ModulePass(ID) {}
+        SplitBlocks() : FunctionPass(ID) {}
 
-        bool runOnModule(Module &M) override {
+
+        bool runOnFunction(Function &func) override
+        {
 
             if( split_blocks )
             {
-                errs() << "----------- Split Blocks Called -----------\n";
+                errs() << "----------- Split Blocks Called As Function-----------\n";
 
                 unsigned long long int block_count = 0;
                 unsigned long long int instr_count = 0;
-                for(auto &func : M.getFunctionList())
+                /*for(auto &func : M.getFunctionList())
                 {
                     block_count += func.getBasicBlockList().size();
                     auto& block_list = func.getBasicBlockList();
@@ -48,8 +50,8 @@ namespace llvm {
                             instr_count += iter->size();
                         }
                     }
-                }
-                errs() << "Revised: \n";
+                }*/
+                /*errs() << "Revised: \n";
                 errs() << "Altered Backend Source File: " << M.getSourceFileName() << "\n";
                 errs() << "Module Name: " << M.getName() << "\n";
                 errs() << "Before: Number of blocks: " << block_count << "\n";
@@ -57,8 +59,8 @@ namespace llvm {
                 if( block_count)
                 {
                     errs() << "Before: average block size (# of instruction): " << (instr_count / block_count) << "\n";
-                }
-                for (auto &func : M.getFunctionList()) {
+                }*/
+                //for (auto &func : M.getFunctionList()) {
                     //if we have a block to split
                     if( func.getBasicBlockList().size() )
                     {
@@ -88,9 +90,9 @@ namespace llvm {
                             }
                         }
                     }
-                }
+                //}
 
-                block_count = 0;
+                /*block_count = 0;
                 instr_count = 0;
                 for(auto &func : M.getFunctionList())
                 {
@@ -111,7 +113,7 @@ namespace llvm {
                 if( block_count)
                 {
                     errs() << "After: average block size (# of instr): " << (instr_count / block_count) << "\n";
-                }
+                }*/
             }
             return false;
         }
@@ -119,7 +121,7 @@ namespace llvm {
 
     char SplitBlocks::ID = 0;
 
-    ModulePass *createSplitBlocksPass() {
+    FunctionPass *createSplitBlocksPass() {
         return new SplitBlocks();
     };
 

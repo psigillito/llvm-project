@@ -49,6 +49,7 @@ namespace llvm {
                         }
                     }
                 }
+                errs() << "Revised: \n";
                 errs() << "Altered Backend Source File: " << M.getSourceFileName() << "\n";
                 errs() << "Module Name: " << M.getName() << "\n";
                 errs() << "Before: Number of blocks: " << block_count << "\n";

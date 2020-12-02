@@ -53,8 +53,10 @@ namespace llvm {
                 errs() << "Module Name: " << M.getName() << "\n";
                 errs() << "Before: Number of blocks: " << block_count << "\n";
                 errs() << "Before: Instruction count: " << instr_count << "\n";
-                errs() << "Before: average block size (# of instruction): " << (instr_count / block_count) << "\n";
-
+                if( block_count)
+                {
+                    errs() << "Before: average block size (# of instruction): " << (instr_count / block_count) << "\n";
+                }
                 for (auto &func : M.getFunctionList()) {
                     //if we have a block to split
                     if( func.getBasicBlockList().size() )
@@ -104,7 +106,11 @@ namespace llvm {
                 }
                 errs() << "After: Number of blocks: " << block_count << "\n";
                 errs() << "After: Instr. count: " << instr_count << "\n";
-                errs() << "After: average block size (# of instr): " << (instr_count / block_count) << "\n";
+
+                if( block_count)
+                {
+                    errs() << "After: average block size (# of instr): " << (instr_count / block_count) << "\n";
+                }
             }
             return false;
         }

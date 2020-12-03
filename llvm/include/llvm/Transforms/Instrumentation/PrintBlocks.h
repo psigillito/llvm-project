@@ -23,20 +23,13 @@
 #include "llvm/IR/ValueSymbolTable.h"
 
 
-
-
 namespace llvm {
 
     class ModulePass;
     class raw_ostream;
 
-using namespace llvm;
-using namespace std;
-
-const char* indent = "    ";
-const char* double_indent = "        ";
-const char* triple_indent = "            ";
-//anonymous namespace to limit to this file
+    using namespace llvm;
+    using namespace std;
 
 static cl::opt<bool> print_blocks("print_blocks", cl::Hidden, cl::desc("Build for Hexagon V67T2"),
                              cl::init(false));
@@ -51,67 +44,33 @@ static cl::opt<bool> print_blocks("print_blocks", cl::Hidden, cl::desc("Build fo
 
             if(print_blocks)
             {
-                errs() << "----------- Print Blocks Called -----------\n";
 
-                errs() << "----------Module Info----------\n";
-                errs() << "Source File: " << M.getSourceFileName() << "\n";
-                errs() << "Module Name: " << M.getName() << "\n\n";
+                unsigned long long int block_count = 0;
+                unsigned long long int instr_count = 0;
 
-                //print global vars
-                errs() << "GLOBAL VARIABLES\n";
-                for( auto global_iter = M.global_begin(); global_iter != M.global_end(); ++global_iter)
+                for(auto &func : M.getFunctionList())
                 {
-                    errs() << indent;
-                    global_iter->print(errs());
-                    errs() << "\n";
-                }
+                    block_count += func.getBasicBlockList().size();
+                    auto& block_list = func.getBasicBlockList();
 
-                errs() << "ALIASES" << "\n";
-                for( auto alias_iter = M.alias_begin(); alias_iter != M.alias_end(); ++alias_iter)
-                {
-                    errs() << indent;
-                    alias_iter->print(errs());
-                    errs() << "\n";
-                }
-
-                errs() << "DATA LAYOUT" << "\n";
-                errs() << indent <<M.getDataLayoutStr() << "\n";
-
-                errs() <<"FUNCTIONS\n";
-
-                errs() << indent << "Number of Functions: " << M.getFunctionList().size() << "\n";
-
-                for( const auto& func : M.getFunctionList())
-                {
-                    errs() << double_indent << "Function Name: " << func.getName() << "\n";
-                    errs() << triple_indent <<"Number of Args: " << func.arg_size() << "\n";
-                    for( auto x = func.arg_begin(); x != func.arg_end(); ++x)
+                    if( !block_list.empty())
                     {
-                        errs() << triple_indent <<"Arg Name: " ;
-                        x->getType()->print(errs());
-                        errs() <<"\n";
-
-                    }
-
-                    errs() << triple_indent <<"Blocks: " << func.getBasicBlockList().size() << "\n";
-
-                    if(func.size())
-                    {
-                        for (auto b = func.begin(); b != func.end(); ++b)
+                        auto iter = block_list.begin();
+                        for(iter = block_list.begin(); iter != block_list.end(); ++iter)
                         {
-                            errs() << "\n" << triple_indent << "--Basic Block --\n";
-
-                            errs() << triple_indent << "Label: ";
-                            errs() << "\n";                        b->printAsOperand(errs(), false);
-
-
-                            for ( auto instr = b->begin(); instr != b->end(); ++instr)
-                            {
-                                errs() << triple_indent << *instr << "\n";
-                            }
+                            instr_count += iter->size();
                         }
                     }
-                    errs() << "\n";
+                }
+
+                errs() << "----------- Print Blocks Called -----------\n";
+                errs() << "Source File: " << M.getSourceFileName() << "\n";
+                errs() << "Module Name: " << M.getName() << "\n";
+                errs() << "Number of blocks: " << block_count << "\n";
+                errs() << "Instruction count: " << instr_count << "\n";
+                if( block_count)
+                {
+                    errs() << "Before: average block size (# of instruction): " << (instr_count / block_count) << "\n";
                 }
             }
             return false;
@@ -121,7 +80,8 @@ static cl::opt<bool> print_blocks("print_blocks", cl::Hidden, cl::desc("Build fo
 char PrintBlocks::ID = 0;
 
 
-    ModulePass *createPrintBlocksPass() {
+    ModulePass *createPrintBlocksPass()
+    {
         return new PrintBlocks();
     };
 }

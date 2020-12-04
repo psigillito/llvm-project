@@ -59,6 +59,8 @@ static cl::opt<bool> print_blocks("print_blocks", cl::Hidden, cl::desc("Build fo
                         for(iter = block_list.begin(); iter != block_list.end(); ++iter)
                         {
                             instr_count += iter->size();
+
+                            errs() << "OPCODE NAME: " << iter->getOpcodeName() << "\n";
                         }
                     }
                 }

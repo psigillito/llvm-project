@@ -45,7 +45,7 @@ namespace llvm {
                     if( !block_list.empty())
                     {
                         //for each basic block
-                        for(unsigned int i = 0; i < block_list.size(); ++i)
+                        /*for(unsigned int i = 0; i < block_list.size(); ++i)
                         {
                             auto block_iter = std::next(block_list.begin(), i);
 
@@ -61,7 +61,42 @@ namespace llvm {
                                     remaining_block = remaining_block->splitBasicBlock(instr_iter);
                                 }
                             }
+                        }*/
+
+                        //fix the phi nodes
+                        //Iterate over each block
+                        for(unsigned int i = 0; i < block_list.size(); ++i)
+                        {
+                            auto block_iter = std::next(block_list.begin(), i);
+
+                            //if the block has instructions in it
+                            if( block_iter->size() )
+                            {
+                                //iterate over the instructions
+                                for( auto instr_iter = block_iter->begin(); instr_iter != block_iter->end(); ++inst_iter)
+                                {
+                                    //if the instruction is a Phi Node
+                                    if( instr_iter->getOpcode() == 55)
+                                    {
+                                        errs() << "FOUND A PHI NODE"
+                                        if( instr_iter->isComplete() )
+                                        {
+                                            errs() << "NODE IS COMPLETE"
+                                        }
+                                        else
+                                        {
+                                            errs() << "NODE IS NOT COMPLETE"
+                                        }
+                                    }
+                                }
+  /*
+                                  If isComplete() fails, identify which predecessor blocks do not have an entry and what the value being assigned to the phi node is for the block it is split from.
+                                        Call addIncoming() to add an entry for the missing block and corresponding value
+*/
+                            }
                         }
+
+
                     }
                 }
             }

@@ -78,7 +78,7 @@ namespace llvm {
                                     //if the instruction is a Phi Node
                                     if( instr_iter->getOpcode() == 55)
                                     {
-                                        auto *PN = dyn_cast<PHINode>(*instr_iter);
+                                        PHINode *PN = dyn_cast<PHINode>(&*instr_iter);
 
 
                                         errs() << "FOUND A PHI NODE\n";

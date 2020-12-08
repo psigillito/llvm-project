@@ -62,7 +62,11 @@ static cl::opt<bool> print_blocks("print_blocks", cl::Hidden, cl::desc("Build fo
                         {
                             instr_count += iter->size();
 
-                            errs() <<"OPCODE: " << iter->getOpcode() << "NAME: " << iter->getOpcodeName() << "\n";
+                            for( auto x = iter->begin(); x != iter->end()l ++x)
+                            {
+
+                            errs() <<"OPCODE: " << x->getOpcode()() << "NAME: " << x->getOpcodeName() << "\n";
+                            }
                         }
                     }
                 }

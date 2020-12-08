@@ -55,6 +55,8 @@ static cl::opt<bool> print_blocks("print_blocks", cl::Hidden, cl::desc("Build fo
 
                     if( !block_list.empty())
                     {
+                        errs() <<"LIST OF BLOCKS \n";
+
                         auto iter = block_list.begin();
                         for(iter = block_list.begin(); iter != block_list.end(); ++iter)
                         {

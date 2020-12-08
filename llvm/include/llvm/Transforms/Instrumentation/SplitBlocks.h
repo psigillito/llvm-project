@@ -73,19 +73,19 @@ namespace llvm {
                             if( block_iter->size() )
                             {
                                 //iterate over the instructions
-                                for( auto instr_iter = block_iter->begin(); instr_iter != block_iter->end(); ++inst_iter)
+                                for( auto instr_iter = block_iter->begin(); instr_iter != block_iter->end(); ++instr_iter)
                                 {
                                     //if the instruction is a Phi Node
                                     if( instr_iter->getOpcode() == 55)
                                     {
-                                        errs() << "FOUND A PHI NODE"
+                                        errs() << "FOUND A PHI NODE\n";
                                         if( instr_iter->isComplete() )
                                         {
-                                            errs() << "NODE IS COMPLETE"
+                                            errs() << "NODE IS COMPLETE\n";
                                         }
                                         else
                                         {
-                                            errs() << "NODE IS NOT COMPLETE"
+                                            errs() << "NODE IS NOT COMPLETE\n";
                                         }
                                     }
                                 }

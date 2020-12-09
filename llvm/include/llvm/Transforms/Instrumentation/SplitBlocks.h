@@ -89,7 +89,7 @@ namespace llvm {
                                             auto parent = instr_iter->getParent();
                                             for (auto it = llvm::pred_begin(parent); it != llvm::pred_end(parent); ++it)
                                             {
-                                                if( getBasicBlockIndex(*it) >= 0 )
+                                                if( PN->getBasicBlockIndex(*it) >= 0 )
                                                 {
                                                     errs() << "FOUND PREDECESSOR\n";
                                                 }
@@ -102,7 +102,7 @@ namespace llvm {
                                             auto parent = instr_iter->getParent();
                                             for (auto it = llvm::pred_begin(parent); it != llvm::pred_end(parent); ++it)
                                             {
-                                                if( getBasicBlockIndex(*it) >= 0 )
+                                                if( PN->getBasicBlockIndex(*it) >= 0 )
                                                 {
                                                     errs() << "FOUND PREDECESSOR\n";
                                                 }

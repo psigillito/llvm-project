@@ -85,9 +85,28 @@ namespace llvm {
                                         if( PN->isComplete() )
                                         {
                                             errs() << "NODE IS COMPLETE\n";
+
+                                            auto parent = instr_iter->getParent();
+                                            for (auto it = llvm::pred_begin(parent); it != llvm::pred_end(parent); ++it)
+                                            {
+                                                if( getBasicBlockIndex(*it) >= 0 )
+                                                {
+                                                    errs() << "FOUND PREDECESSOR\n";
+                                                }
+                                            }
                                         }
                                         else
                                         {
+                                            //iterate over the predecessors
+
+                                            auto parent = instr_iter->getParent();
+                                            for (auto it = llvm::pred_begin(parent); it != llvm::pred_end(parent); ++it)
+                                            {
+                                                if( getBasicBlockIndex(*it) >= 0 )
+                                                {
+                                                    errs() << "FOUND PREDECESSOR\n";
+                                                }
+                                            }
                                             errs() << "NODE IS NOT COMPLETE\n";
                                         }
                                     }

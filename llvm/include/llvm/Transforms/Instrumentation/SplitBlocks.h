@@ -100,6 +100,7 @@ namespace llvm {
                                             //iterate over the predecessors
 
                                             auto parent = instr_iter->getParent();
+                                            int count = 0;
                                             for (auto it = llvm::pred_begin(parent); it != llvm::pred_end(parent); ++it)
                                             {
                                                 if( PN->getBasicBlockIndex(*it) >= 0 )
@@ -113,10 +114,15 @@ namespace llvm {
 
                                                     if(it != llvm::pred_begin(parent))
                                                     {
-                                                        auto prev_it = --it;
-                                                        PN->addIncoming( PN->getIncomingValueForBlock(*prev_it), *it)
+                                                        auto prev_it = llvm::pred_begin(parent);
+                                                        for( auto i = 1; i < count; i++)
+                                                        {
+                                                            prev_it++;
+                                                        }
+                                                        PN->addIncoming( PN->getIncomingValueForBlock(*prev_it), *it);
                                                     }
                                                 }
+                                                count++;
                                             }
                                             errs() << "NODE IS NOT COMPLETE\n";
                                         }

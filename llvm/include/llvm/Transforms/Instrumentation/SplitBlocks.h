@@ -45,7 +45,7 @@ namespace llvm {
                     if( !block_list.empty())
                     {
                         //for each basic block
-                        /*for(unsigned int i = 0; i < block_list.size(); ++i)
+                        for(unsigned int i = 0; i < block_list.size(); ++i)
                         {
                             auto block_iter = std::next(block_list.begin(), i);
 
@@ -61,7 +61,7 @@ namespace llvm {
                                     remaining_block = remaining_block->splitBasicBlock(instr_iter);
                                 }
                             }
-                        }*/
+                        }
 
                         //fix the phi nodes
                         //Iterate over each block
@@ -105,6 +105,17 @@ namespace llvm {
                                                 if( PN->getBasicBlockIndex(*it) >= 0 )
                                                 {
                                                     errs() << "FOUND PREDECESSOR\n";
+                                                }
+                                                else
+                                                {
+                                                    //there isnt a record
+                                                    //store the basic block and the value for the previous block
+
+                                                    if(it != llvm::pred_begin(parent))
+                                                    {
+                                                        auto prev_it = --it;
+                                                        PN->addIncoming( PN->getIncomingValueForBlock(*prev_it), *it)
+                                                    }
                                                 }
                                             }
                                             errs() << "NODE IS NOT COMPLETE\n";

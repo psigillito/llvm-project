@@ -51,7 +51,7 @@ namespace llvm {
 
                             if( block_iter->size() > split_blocks)
                             {
-                                auto instr_iter = getFirstNonPHI());
+                                auto instr_iter = block_iter->getFirstNonPHI());
 
                                 //auto remaining_block = block_iter->splitBasicBlock(instr_iter);
 

@@ -113,12 +113,12 @@ namespace llvm {
                                                     {
                                                         errs() << "NODE IS NOT COMPLETE\n";
 
-/*                                                        auto prev_it = llvm::pred_begin(parent);
+                                                       auto prev_it = llvm::pred_begin(parent);
                                                         for( auto i = 0; i < count; i++)
                                                         {
                                                             prev_it++;
                                                         }
-                                                        PN->addIncoming( PN->getIncomingValueForBlock(*prev_it), *it);*/
+                                                        PN->addIncoming( PN->getIncomingValueForBlock(*prev_it), *it);
                                                     }
                                                 }
                                                 count++;

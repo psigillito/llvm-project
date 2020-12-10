@@ -51,21 +51,29 @@ namespace llvm {
 
                             if( block_iter->size() > split_blocks)
                             {
-                                auto instr_iter = std::next(block_iter->begin(), split_blocks - 1);
-                                auto remaining_block = block_iter->splitBasicBlock(instr_iter);
+                                auto instr_iter = getFirstNonPHI());
 
-                                bool cont = true;
-                                while(remaining_block->size() > split_blocks && cont)
+                                //auto remaining_block = block_iter->splitBasicBlock(instr_iter);
+
+                                if(instr_iter != block_iter->end())
                                 {
-                                    instr_iter = std::next(remaining_block->begin(), split_blocks - 1);
-                                    remaining_block = remaining_block->splitBasicBlock(instr_iter);
+                                    errs() << "BLOCK SPLIT\n";
+
+                                    block_iter->splitBasicBlock(instr_iter);
                                 }
+
+                                //bool cont = true;
+                                //while(remaining_block->size() > split_blocks && cont)
+                                //{
+                                //    instr_iter = std::next(remaining_block->begin(), split_blocks - 1);
+
+                                //}
                             }
                         }
 
                         //fix the phi nodes
                         //Iterate over each block
-                        for(unsigned int i = 0; i < block_list.size(); ++i)
+                        /*for(unsigned int i = 0; i < block_list.size(); ++i)
                         {
                             auto block_iter = std::next(block_list.begin(), i);
 
@@ -132,7 +140,7 @@ namespace llvm {
                                         Call addIncoming() to add an entry for the missing block and corresponding value
 */
                             }
-                        }
+                        }*/
 
 
                     }

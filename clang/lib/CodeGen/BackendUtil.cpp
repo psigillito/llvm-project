@@ -775,7 +775,7 @@ void EmitAssemblyHelper::CreatePasses(legacy::PassManager &MPM,
   }
 
   PMBuilder.addExtension(PassManagerBuilder::EP_OptimizerLast, addPrintBlocksPass );
-  PMBuilder.addExtension(PassManagerBuilder::EP_EarlyAsPossible, addSplitBlocksPass );//TRIED EARLY, scalar last, opt last, peephole
+  PMBuilder.addExtension(PassManagerBuilder::EP_OptimizerLast, addSplitBlocksPass );//TRIED EARLY, scalar last, opt last, peephole
   PMBuilder.addExtension(PassManagerBuilder::EP_OptimizerLast, addShuffleBlocksPass );
 
 

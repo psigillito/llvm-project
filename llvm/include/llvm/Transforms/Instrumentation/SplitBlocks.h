@@ -55,7 +55,7 @@ namespace llvm {
 
                                 //auto remaining_block = block_iter->splitBasicBlock(instr_iter);
 
-                                if(instr_iter != block_iter->end())
+                                if(*instr_iter != block_iter->end())
                                 {
                                     errs() << "BLOCK SPLIT\n";
 

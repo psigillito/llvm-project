@@ -775,9 +775,11 @@ void EmitAssemblyHelper::CreatePasses(legacy::PassManager &MPM,
   }
 
   PMBuilder.addExtension(PassManagerBuilder::EP_OptimizerLast, addPrintBlocksPass );
-  PMBuilder.addExtension(PassManagerBuilder::EP_OptimizerLast, addSplitBlocksPass );//TRIED EARLY, scalar last, opt last, peephole
+  PMBuilder.addExtension(PassManagerBuilder::EP_EarlyAsPossible, addSplitBlocksPass );//TRIED EARLY, scalar last, opt last, peephole
   PMBuilder.addExtension(PassManagerBuilder::EP_OptimizerLast, addShuffleBlocksPass );
 
+  PMBuilder.addExtension(PassManagerBuilder::EP_EnabledOnOptLevel0, addPrintBlocksPass );
+  PMBuilder.addExtension(PassManagerBuilder::EP_EnabledOnOptLevel0, addSplitBlocksPass);
 
   // Set up the per-function pass manager.
   FPM.add(new TargetLibraryInfoWrapperPass(*TLII));

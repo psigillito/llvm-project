@@ -55,18 +55,18 @@ static cl::opt<bool> print_blocks("print_blocks", cl::Hidden, cl::desc("Build fo
 
                     if( !block_list.empty())
                     {
-                        errs() <<"LIST OF BLOCKS \n";
+                        //errs() <<"LIST OF BLOCKS \n";
 
                         auto iter = block_list.begin();
                         for(iter = block_list.begin(); iter != block_list.end(); ++iter)
                         {
                             instr_count += iter->size();
 
-                            for( auto x = iter->begin(); x != iter->end(); ++x)
+                            /*for( auto x = iter->begin(); x != iter->end(); ++x)
                             {
 
                             errs() <<"OPCODE: " << x->getOpcode() << "NAME: " << x->getOpcodeName() << "\n";
-                            }
+                            }*/
                         }
                     }
                 }
@@ -78,7 +78,7 @@ static cl::opt<bool> print_blocks("print_blocks", cl::Hidden, cl::desc("Build fo
                 errs() << "Instruction count: " << instr_count << "\n";
                 if( block_count)
                 {
-                    errs() << "Before: average block size (# of instruction): " << (instr_count / block_count) << "\n";
+                    errs() << "Average block size (# of instruction): " << (instr_count / block_count) << "\n";
                 }
             }
             return false;
